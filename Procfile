@@ -1,1 +1,1 @@
-web:lts
+web:goweb

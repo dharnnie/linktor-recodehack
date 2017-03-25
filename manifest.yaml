@@ -1,7 +1,0 @@
-applications:
- -name: lts
- random-route: true
- memory: 128M
- buildpack: go_buildpack
- host: lts
- domain: eu-gb.mybluemix.net
