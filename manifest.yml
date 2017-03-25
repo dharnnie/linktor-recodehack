@@ -5,4 +5,4 @@ applications:
   host: lts
   domain: eu-gb.mybluemix.net
   command: lts
-  buildpack: github.com/cloudfoundry/go_buildpack.git
+  buildpack: go_buildpack
