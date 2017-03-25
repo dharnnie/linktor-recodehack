@@ -2,7 +2,7 @@ applications:
 - name: lts
   random-route: true
   memory: 128M
-  buildpack: go_buildpack
-  host: lts01
+  host: lts
   domain: eu-gb.mybluemix.net
-  buildpack: go_buildpack
+  command: lts
+  buildpack: github.com/cloudfoundry/go_buildpack.git
