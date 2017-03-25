@@ -1,1 +1,1 @@
-web:goweb
+web:github.com/dharnnie/linktor
