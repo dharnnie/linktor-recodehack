@@ -1,1 +1,1 @@
-web:github.com/dharnnie/linktor
+web: linktor
