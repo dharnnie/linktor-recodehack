@@ -3,5 +3,5 @@ applications:
   random-route: true
   memory: 128M
   buildpack: go_buildpack
-  host: lts
+  host: lts01
   domain: eu-gb.mybluemix.net
