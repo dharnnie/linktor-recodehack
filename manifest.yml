@@ -4,5 +4,5 @@ applications:
   memory: 128M
   host: lts
   domain: eu-gb.mybluemix.net
-  command: lts
+  command: linktor
   buildpack: go_buildpack
