@@ -1,8 +1,7 @@
 applications:
-- path: .
-  memory: 128M
-  instances: 1
-  domain: eu-gb.mybluemix.net
-  name: lts
-  host: lts
-  disk_quota: 1024M
+ -name: lts
+ random-route: true
+ memory: 128M
+ buildpack: go_buildpack
+ host: lts
+ domain: eu-gb.mybluemix.net
