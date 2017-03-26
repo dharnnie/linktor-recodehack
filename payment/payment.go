@@ -8,6 +8,12 @@ import(
 	"github.com/dharnnie/linktor/db"
 	"log"
 	"html/template"
+	"net/url"
+	 "bytes"
+	 "strconv"
+	 "io"
+	 "os"
+	// "encoding/json"
 )
 
 type ThisUser struct{
@@ -84,8 +90,59 @@ func smplErr(e error, m string){
 	}
 }
 
-func Pay(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "GET"{
-		
-	}
+func Auth0(w http.ResponseWriter, r *http.Request) {
+	apiUrl := "https://pwcstaging.herokuapp.com"
+    resource := "/oauth/token"
+    data := url.Values{}
+    data.Set("client_id", "58d6ab494ec0a21000a915f3")
+    data.Add("client_secret", "1wB8VcAP5dKkmqzipJumlP6ym9wTCeMPUWeF4MvM7rBt5MBKgsYEgsqEEfLsWbpx27i9hXmXA6LPYjg0jPZmhRLUgOddLaeSjlwW")
+    data.Set("grant_type", "client_credentials")
+
+    u, _ := url.ParseRequestURI(apiUrl)
+    u.Path = resource
+    urlStr := fmt.Sprintf("%v", u) // "https://api.com/user/"
+
+    client := &http.Client{}
+    res, _ := http.NewRequest("POST", urlStr, bytes.NewBufferString(data.Encode())) // <-- URL-encoded payload
+    res.Header.Add("Authorization", "auth_token=\"XXXXXXX\"")
+    res.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+    res.Header.Add("Content-Length", strconv.Itoa(len(data.Encode())))
+
+    resp, _ := client.Do(res)
+    fmt.Println(resp.Status)
+    io.Copy(os.Stdout, resp.Body)
+
+
+   // fmt.Println(resp.Body)
 }
+
+func RequestAccount(w http.ResponseWriter, r *http.Request) {
+	apiUrl := "https://pwcstaging.herokuapp.com"
+    resource := "/account/validation"
+    data := url.Values{}
+    data.Set("bankcode", "58d6ab494ec0a21000a915f3")
+    data.Add("accountnumber", "1wB8VcAP5dKkmqzipJumlP6ym9wTCeMPUWeF4MvM7rBt5MBKgsYEgsqEEfLsWbpx27i9hXmXA6LPYjg0jPZmhRLUgOddLaeSjlwW")
+
+    u, _ := url.ParseRequestURI(apiUrl)
+    u.Path = resource
+    urlStr := fmt.Sprintf("%v", u)
+
+    client := &http.Client{}
+    res, _ := http.NewRequest("POST", urlStr, bytes.NewBufferString(data.Encode())) // <-- URL-encoded payload
+    
+    res.Header.Add("Authorization", "auth_token= bearer")
+    res.Header.Add("Content-Type", "application/json")
+    res.Header.Add("Content-Length", strconv.Itoa(len(data.Encode())))
+
+    resp, _ := client.Do(res)
+    fmt.Println(resp.Status)
+    io.Copy(os.Stdout, resp.Body)
+}
+
+// func CreateAccount(w http.ResponseWriter, r *http.Request){
+
+// }
+
+
+// 58d6ab494ec0a21000a915f3
+// 1wB8VcAP5dKkmqzipJumlP6ym9wTCeMPUWeF4MvM7rBt5MBKgsYEgsqEEfLsWbpx27i9hXmXA6LPYjg0jPZmhRLUgOddLaeSjlwW

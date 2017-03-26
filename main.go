@@ -51,6 +51,9 @@ func serve() {
 	//myMux.HandleFunc("/paymentfiles", handlers.PaymentFiles)
 	myMux.HandleFunc("/me", profile.ViewProfileServlet)
 	myMux.HandleFunc("/requests", handlers.NotificationServlet)	
+	//myMux.HandleFunc("/api", payment.PWCAuth)
+	myMux.HandleFunc("/auth", payment.Auth0)
+	myMux.HandleFunc("/req", payment.RequestAccount)
 
 	http.Handle("/", myMux)
 	err := http.ListenAndServe(":"+port, nil)
