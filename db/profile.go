@@ -12,6 +12,7 @@ const(
 	GET_EDUCATION = "SELECT inst, program, faculty, dept, mat, duration, level FROM education WHERE nick = ?"
 	UPDATE_PIC = "UPDATE pic SET pic = ? WHERE nick = ?"
 	GET_PIC = "SELECT pic FROM pic WHERE nick = ?"
+	CREATE_WALLET = "INSERT INTO wallet_bvn (nick, email, gender, address1, address2, dob, state,religion, branchcode) VALUES(?,?,?,?,?,?,?,?,?)"
 )
 
 
@@ -113,5 +114,22 @@ func UpdatePic(n, p string) {
 	lr, err := res.LastInsertId()
 	HandleDBError(err, "Error occured while getting LastInsertId at UPDATE_PIC")
 	log.Println("LastInsertId for Update is : ", lr)
+}
+
+func CreateWallet(n, email string, gender, add1 string, add2,dob string,state,rel string, branchcode string){
+
+	db, err := sql.Open(db_type, db_path)
+	HandleDBError(err, "Could not Open db  at CreateWallet")
+	defer db.Close()
+
+	prep, err := db.Prepare(CREATE_WALLET)
+	HandleDBError(err, "Could not prepare CREATE_WALLET")
+
+	res, err := prep.Exec(&n, &email, &gender, &add1, &add2, &dob,&state,&rel,&branchcode)
+	HandleDBError(err, "Could not Exec CREATE_WALLET")
+
+	lr, err := res.LastInsertId()
+	HandleDBError(err, "Could not get LastInsertId")
+	log.Println("Last row is: ", lr)
 }
 

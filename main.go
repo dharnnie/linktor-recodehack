@@ -45,9 +45,10 @@ func serve() {
 	myMux.HandleFunc("/tutor/request", handlers.RequestTutorServlet)
 	myMux.HandleFunc("/earn", handlers.BecomeATutorServlet)
 	myMux.HandleFunc("/me/payment", handlers.PaymentServlet)
-	myMux.HandleFunc("/paymentfiles", handlers.PaymentFiles)
 	myMux.HandleFunc("/me", profile.ViewProfileServlet)
-	
+	//myMux.HandleFunc("/paymentfiles", handlers.PaymentFiles)
+	myMux.HandleFunc("/me", profile.ViewProfileServlet)
+	myMux.HandleFunc("/requests", handlers.NotificationServlet)	
 
 	http.Handle("/", myMux)
 	err := http.ListenAndServe(":"+port, nil)

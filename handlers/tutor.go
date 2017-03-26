@@ -31,6 +31,16 @@ type NewTutor struct{
 	TBio string
 }
 
+type NotificationPayload struct{
+	Nick string
+	Course string
+	Category string
+	School string
+	Status string
+	Description string
+	ThisUser
+}
+
 func RequestTutorServlet(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET"{
 		if sess.SessionExists(w,r){
@@ -68,7 +78,22 @@ func RequestTutorServlet(w http.ResponseWriter, r *http.Request) {
 	}
 }
 			
-
+func  NotificationServlet (w http.ResponseWriter, r *http.Request){
+	if sess.SessionExists(w,r){
+		sess.InitSessionValues(w,r)
+		n := sess.GetSessionNick(w,r)
+		fmt.Println("SessionExists at ViewProfile ", n)
+		this := ThisUser{n, Done{""}}
+		if r.Method == "GET"{
+			this.serveNotifications(w)
+		}
+	}else{
+		t, err := template.ParseFiles("templates/homepage.html")
+		smplErr(err, "Error at Index Servlet")
+		t.Execute(w, nil)	
+		fmt.Println("Session Linktor does not exist")
+	}
+}
 
 func BecomeATutorServlet(w http.ResponseWriter, r *http.Request) {
 	if sess.SessionExists(w,r){
@@ -121,3 +146,14 @@ func (r *Request) GenerateRID() { // This function generates Id for requests mad
 func (re Request) SaveRequest(w http.ResponseWriter, r *http.Request) {
 	db.PersistRequest(re.Sender, re.Course, re.Category, re.Institution, re.Description, re.RID)
 }
+
+func (info ThisUser) serveNotifications(w http.ResponseWriter) {
+	npl := new(NotificationPayload)
+
+	npl.Nick, npl.Course, npl.Category, npl.School, npl.Status, npl.Description = db.GetRequest()
+	npl.ThisUser.Nick = info.Nick
+	npl.ThisUser.Done.Success = ""
+	t, err := template.ParseFiles("templates/pages/notification.html")
+	smplErr(err, "Could not parse notification.html")
+	t.Execute(w, npl)
+}	

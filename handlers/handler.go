@@ -10,7 +10,11 @@ import(
 	"github.com/dharnnie/linktor/profile"
 	"github.com/dharnnie/linktor/mail"
 	"github.com/dharnnie/linktor/payment"
-	"encoding/json"
+	//"github.com/golang/glog"
+	//"net/url"
+	//"encoding/json"
+	//"bytes"
+	"github.com/franela/goreq"
 )
 
 
@@ -51,6 +55,7 @@ type Payload struct{
 
 	// other files
 }
+
 
 
 
@@ -209,63 +214,73 @@ func PaymentServlet(w http.ResponseWriter, r *http.Request){
 	}
 }
 
-func PaymentFiles(w http.ResponseWriter, r *http.Request) {
-	var ac Payload
-	if r.Method == "POST"{
-		// save data in struct as a pointer
-		r.ParseForm()
-		payment.PaymentFilesPage(w,r)
-		ac = Payload{
-			Email : r.FormValue("email"),
-			Num : r.FormValue("phone"),// either bvn or phone number
-			Gender :r.FormValue("gender"),
-			Addr1 : r.FormValue("address1"),
-			Addr2 : r.FormValue("address2"),
-			DOB : r.FormValue("dob"),
-			State : r.FormValue("state"),
-			Rel : r.FormValue("religion"),
-			BranchCode : r.FormValue("bcode"),
-		}
-		fmt.Println(ac)
-		SendPWCRequest(w, ac)
+// func PaymentFiles(w http.ResponseWriter, r *http.Request) {
+// 	var ac Payload
+// 	if r.Method == "POST"{
+// 		// save data in struct as a pointer
+// 		r.ParseForm()
+// 		payment.PaymentFilesPage(w,r)
+// 		ac = Payload{
+// 			Email : r.FormValue("email"),
+// 			Num : r.FormValue("phone"),// either bvn or phone number
+// 			Gender :r.FormValue("gender"),
+// 			Addr1 : r.FormValue("address1"),
+// 			Addr2 : r.FormValue("address2"),
+// 			DOB : r.FormValue("dob"),
+// 			State : r.FormValue("state"),
+// 			Rel : r.FormValue("religion"),
+// 			BranchCode : r.FormValue("bcode"),
+// 		}
+// 		fmt.Println(ac)
+// 		fmt.Println("00000000000000000000000000000000000000000000")
+// 		//SendPWCAuthRequest()
 
-		// call upload files page
+// 		// call upload files page
 
-		// verify befoe saving
-		// if success from paywithcapture, save to db
+// 		// verify befoe saving
+// 		// if success from paywithcapture, save to db
 
-		
+// 	}else{ // use a put method here
+// 		// payment.PaymentSettingsDone()
+// 	}
+// }
 
+type TokenRequest struct{
+	ClientID string `json:"client_id"`
+	ClientSec string `json:"client_secret"`
+	GrantType string `json:"grant_type"`
+}
 
-	}else{ // use a put method here
-		// payment.PaymentSettingsDone()
+type TokenResponse struct{
+	TokenType string `json:"token_type"`
+	AccessToken string `json:"access_token"`
+	ExpiresIn int64 `json:"expires_in"`
+	RefreshToken string `json:"refresh_token"`
+}
+
+func SendPWCAuthRequest(w http.ResponseWriter, r *http.Request) {
+	base := "https://pwcstaging.herokuapp.com"
+	authpost := "/oauth/token"
+
+	apiurl := base + authpost
+
+	type Item struct{
+		Value string
 	}
-}
+	item := Item{Value:"client_id=58d6ab494ec0a21000a915f3&client_secret=1wB8VcAP5dKkmqzipJumlP6ym9wTCeMPUWeF4MvM7rBt5MBKgsYEgsqEEfLsWbpx27i9hXmXA6LPYjg0jPZmhRLUgOddLaeSjlwW&grant_type=client_credentials"}
 
-// from json  package
-func SendPWCRequest(w http.ResponseWriter, x Payload){
-	response, err := createPWCRequest(x) // Pay with capture
-	if err != nil{
-		fmt.Println("Err at SendPWCRequest")
-		panic(err)
-	}
-	fmt.Println(string(response))
-	//return string(response)
-}
+	res, err := goreq.Request{Method:"POST",Uri: apiurl,Body: item,}.Do() 
+	if err != nil {
+		fmt.Println("Could not make request", err)
+	}	
 
-func createPWCRequest(x Payload) ([]byte, error	){
-	p := x
-	// p = Payload{
-	// 	Email : x.Email,
-	// 	Num  : x.Num,
-	// 	Gender : x.Gender,
-	// 	Addr1 : x.Addr1,
-	// 	Addr2 : x.Addr2,
-	// 	DOB : x.DOB,
-	// 	State : x.State,
-	// 	Rel : x.Rel,
-	// 	BranchCode : x.BranchCode, 
-	// }
+	fmt.Println(res)
 
-	return json.MarshalIndent(p, "", "  ")
+	tknRes := new(TokenResponse)
+
+	res.Body.FromJsonTo(&tknRes)
+	fmt.Println(&tknRes)
+
 }
+// 58d6ab494ec0a21000a915f3 - client id
+// 1wB8VcAP5dKkmqzipJumlP6ym9wTCeMPUWeF4MvM7rBt5MBKgsYEgsqEEfLsWbpx27i9hXmXA6LPYjg0jPZmhRLUgOddLaeSjlwW client secret

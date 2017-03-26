@@ -10,6 +10,7 @@ import(
 const(
 	SAVE_REQUEST = "INSERT INTO requests (nick,course,category,school,description, rid) VALUES(?,?,?,?,?,?)"
 	ADD_TUTOR = "INSERT INTO t_expertise (nick,expertise,t_bio) VALUES(?,?,?)"
+	GET_REQS = "SELECT nick, course, category, school, status, description FROM requests WHERE id = ?"
 )
 
 func PersistRequest(n, c string, cat, sch string , desc, rid string) {
@@ -42,6 +43,22 @@ func AddNewTutor(n,ex string, tbio string) {
 	lr, err := res.LastInsertId()
 	HandleDBError(err, "Could not get LastInsertId")
 	fmt.Println("Last row is: ", lr)
+}
+
+func GetRequest()(string,string,string,string,string,string) { // will change to get requests afterwards
+	db, err := sql.Open(db_type, db_path)
+	HandleDBError(err, "Could not Open db  at GetRequest")
+	defer db.Close()
+	id := 1
+	query, err := db.Query(GET_REQS, id)
+	HandleDBError(err, "Error occured while getting basic")
+
+	var nick,course,cat,sch,status, description string
+	for query.Next(){
+		err := query.Scan(&nick, &course, &cat, &sch, &status, &description)
+		HandleDBError(err, "Error > Query.Scan >GET_BASIC")
+	}
+	return nick, course,cat,sch,status, description
 }
 
 
