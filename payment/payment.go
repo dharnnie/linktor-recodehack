@@ -139,7 +139,7 @@ func RequestAccount(w http.ResponseWriter, r *http.Request) {
     io.Copy(os.Stdout, resp.Body)
 }
 
-func 
+//func 
 
 // func CreateAccount(w http.ResponseWriter, r *http.Request){
 
