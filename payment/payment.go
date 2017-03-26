@@ -11,8 +11,8 @@ import(
 	"net/url"
 	 "bytes"
 	 "strconv"
-	 "io"
-	 "os"
+	 // "io"
+	 // "os"
 	// "encoding/json"
 )
 
@@ -138,6 +138,8 @@ func RequestAccount(w http.ResponseWriter, r *http.Request) {
     fmt.Println(resp.Status)
     io.Copy(os.Stdout, resp.Body)
 }
+
+func 
 
 // func CreateAccount(w http.ResponseWriter, r *http.Request){
 
