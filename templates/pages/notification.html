@@ -77,42 +77,97 @@
             </ul>
             <!-- /.navbar-top-links -->
 
-               <div class="navbar-default sidebar " role="navigation">
-                     <div class="sidebar-nav navbar-collapse">
+              <div class="navbar-default sidebar " role="navigation">
+                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                       
                         <li>
-                            <a href="dashboard.html"><i class="fa fa-home "></i> Dashboard</a>
-                        </li>
-                       
-                        <li>
-                            <a href="view-profile.html"><i class="glyphicon glyphicon-user"></i> view profile</a>
+                            <a href="/"><i class="fa fa-home "></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="edit-profile.html"><i class="fa  fa-gears "></i> update profile</a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i>Profile<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                     <a href="/profile/view"><i class="fa fa-folder-open"></i> View profile</a>
+                                </li>
+                                <li>
+                                    <a href="/profile/edit" active><i class="fa  fa-gears "></i> Edit profile</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
-                            <a href="get-tutor.html"><i class="fa fa-mortar-board   "></i> get tutor</a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i>Tutor<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                     <a href="/tutor/request"><i class="fa fa-folder-open"></i>Get a tutor</a>
+                                </li>
+                                <li>
+                                    <a href="/earn" active><i class="fa  fa-money "></i>Earn</a>
+                                </li>
+                                <li>
+                                    <a href="/tutor/rate" active><i class="fa  fa-gears "></i>Rate tutor</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
-                            <a href="rate-tutor.html"><i class="fa  fa-star   "></i> rate tutor</a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i>Study Group<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="/groups/join"><i class="fa fa-folder-open"></i>Join a group</a>
+                                </li>
+                                <li>
+                                    <a href="/groups/suggest" active><i class="fa  fa-gears "></i>Suggest new group</a>
+                                </li>
+                                <li>
+                                    <a href="/groups/suggest" active><i class="fa  fa-gears "></i>Create new group</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
-                            <a href="history.html"><i class="fa  fa-book   "></i> view course history</a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i>Resources<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="resources/upload"><i class="fa  fa-upload   "></i>Upload Resource</a>
+                                </li>
+                                <li>
+                                    <a href="/resources/mine"><i class="fa  fa-th-list"></i>My Resources</a>
+                                </li>
+                                <li>
+                                    <a href="/resources/get"><i class="fa  fa-download"></i>Get a Resource</a>
+                                </li>
+                            </ul>
                         </li>
-                         <li>
-                            <a href="payment.html"><i class="fa  fa-money   "></i> payment </a>
+                            <li>
+                            <a href="#"><i class="fa fa-pencil fa-fw"></i> Course advice<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                     <a href="/tutor/advice"><i class="fa fa-bullhorn   "></i>Advice a newbie</a>
+                                </li>
+                                <li>
+                                     <a href="/tutor/getadvice"><i class="fa fa-bullhorn   "></i>Get Advice</a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
-                            <a href="request.html"><i class="glyphicon glyphicon-send   "> </i> sent requests</a>
-                        </li>
-                          <li>
-                            <a href="notification.html"><i class="fa fa-envelope   "> </i> notifications</a>
+                            <a href="/myrequests"><i class="glyphicon glyphicon-send   "> </i>Sent requests</a>
                         </li>
                         <li>
-                            <a href="report.html"><i class="fa fa-files-o"></i>report an issue</a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Payment<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                     <a href="/me/payment"><i class="fa fa-folder-open"></i>Status</a>
+                                </li>
+                                <li>
+                                    <a href="/me/payment/update" active><i class="fa  fa-gears "></i>Update Payment details</a>
+                                </li>
+                            </ul>
                         </li>
-                       
+                        <li>
+                            <a href="/me/notifications"><i class="fa fa-envelope"> </i> Notifications</a>
+                        </li>
+                        <li>
+                            <a href="/me/report"><i class="fa fa-files-o"></i>Report an issue</a>
+                        </li>
+                        
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

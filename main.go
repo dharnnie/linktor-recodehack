@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/dharnnie/linktor/handlers"
 	"github.com/dharnnie/linktor/profile"
+	"github.com/dharnnie/linktor/payment"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
@@ -46,6 +47,7 @@ func serve() {
 	myMux.HandleFunc("/earn", handlers.BecomeATutorServlet)
 	myMux.HandleFunc("/me/payment", handlers.PaymentServlet)
 	myMux.HandleFunc("/me", profile.ViewProfileServlet)
+	myMux.HandleFunc("/me/createwallet", payment.NewWallet)
 	//myMux.HandleFunc("/paymentfiles", handlers.PaymentFiles)
 	myMux.HandleFunc("/me", profile.ViewProfileServlet)
 	myMux.HandleFunc("/requests", handlers.NotificationServlet)	
