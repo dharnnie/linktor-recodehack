@@ -28,8 +28,8 @@ func SendVerificationMail(URL,nick string, to string){
 
 
 func send(body string, to string){
-	from := "dcodes.daniel@gmail.com"
-	secret := "	danielcodes"
+	from := "mail@gmail.com"
+	secret := "	pass"
 
 	msg := "From: " + from + "\r\n" +
 			"To: " + to + "\r\n" +
